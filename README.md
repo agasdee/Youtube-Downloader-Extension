@@ -1,4 +1,4 @@
-# Tubly Downloader - YouTube Downloader Chrome Extension
+# <a href="https://tubly.download">Tubly Downloader</a> - YouTube Downloader Chrome Extension
 
 <p align="center">
   <img src="logo/icon128.png" width="64" height="64" alt="YouTube Downloader Logo">
@@ -13,15 +13,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/tublydownloader/Youtube-Downloader-Extension/issues/new/choose">🐛 Report Issue</a> •
-  <a href="https://tubly.download">🌐 Official Website</a>
-</p>
-
-<p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#screenshots">Screenshots</a> •
   <a href="#installation">Installation</a> •
-  <a href="#faq">FAQ</a>
+  <a href="#faq">FAQ</a> •
+  <a href="https://github.com/tublydownloader/Youtube-Downloader-Extension/issues/new/choose">🐛 Report Issue</a>
 </p>
 
 ## Key Features
