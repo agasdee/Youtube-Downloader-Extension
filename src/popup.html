@@ -3,54 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Downloader</title>
+  <title>Dubplitube - Premium YouTube Downloader</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="main-view">
+    <!-- Header -->
     <div class="header">
-      <img src="../assets/logo.png" alt="YouTube Downloader Logo" class="logo">
-      <h1>YouTube Downloader</h1>
-    </div>
-    
-    <div id="no-video" class="message">
-      <p>Please navigate to a YouTube video to use this extension.</p>
-      <button id="open-youtube" class="btn primary">Go to YouTube</button>
-    </div>
-    
-    <div id="video-info" class="hidden">
-      <div class="thumbnail-container">
-        <img id="video-thumbnail" src="" alt="Video thumbnail">
-        <span id="video-duration" class="duration"></span>
+      <div class="logo-wrapper">
+        <img src="../logo/icon128.png" alt="Dubplitube Logo" class="logo">
+        <div class="logo-glow"></div>
       </div>
-      <h2 id="video-title" class="title"></h2>
-      <p id="channel-name" class="channel"></p>
+      <div class="brand">
+        <h1 class="glow-text">DUBPLITUBE</h1>
+        <span class="badge">PRO</span>
+      </div>
+    </div>
+
+    <!-- Quick Settings / Engine Switcher -->
+    <div class="settings-tab">
+      <span class="tab-label">Engine:</span>
+      <div class="engine-switch">
+        <button id="engine-api" class="engine-btn active" title="Download via high-speed cloud API">Cloud API</button>
+        <button id="engine-local" class="engine-btn" title="Download via local companion yt-dlp">Local (yt-dlp)</button>
+      </div>
+    </div>
+    
+    <!-- No Video Message -->
+    <div id="no-video" class="message-box">
+      <div class="icon-warning">⚠️</div>
+      <p>Please navigate to a YouTube video or Shorts to begin downloading.</p>
+      <button id="open-youtube" class="btn primary-btn pulse-animation">Go to YouTube</button>
+    </div>
+    
+    <!-- Video Info Panel -->
+    <div id="video-info" class="hidden">
+      <div class="thumbnail-card">
+        <img id="video-thumbnail" src="" alt="Video thumbnail">
+        <span id="video-duration" class="duration-tag">0:00</span>
+      </div>
+      
+      <div class="meta-section">
+        <h2 id="video-title" class="video-title">Loading video title...</h2>
+        <p id="channel-name" class="channel-name">Channel Name</p>
+      </div>
       
       <div class="download-section">
-        <h3>Video Quality</h3>
-        <div id="video-qualities" class="quality-options">
-          <!-- Quality options will be inserted here by JavaScript -->
+        <div class="section-title">
+          <span class="icon">🎬</span>
+          <h3>Video Resolutions</h3>
+        </div>
+        <div id="video-qualities" class="quality-grid">
+          <!-- Dynamically filled resolutions -->
         </div>
         
-        <h3>Audio Only</h3>
-        <div id="audio-qualities" class="quality-options">
-          <!-- Audio options will be inserted here by JavaScript -->
+        <div class="section-title">
+          <span class="icon">🎵</span>
+          <h3>Audio Extractor (MP3)</h3>
+        </div>
+        <div id="audio-qualities" class="quality-grid">
+          <!-- Dynamically filled audio MP3s -->
+        </div>
+
+        <div class="section-title" style="margin-top: 15px;">
+          <span class="icon">📝</span>
+          <h3>Subtitles / Transcripts</h3>
+        </div>
+        <div id="subtitle-qualities" class="quality-grid">
+          <button class="quality-btn" data-type="transcript" data-id="th">Thai (TH) SRT</button>
+          <button class="quality-btn" data-type="transcript" data-id="en">English (EN) SRT</button>
         </div>
       </div>
       
-      <div id="download-progress" class="progress-container hidden">
-        <div class="progress-bar">
-          <div id="progress" class="progress"></div>
+      <!-- Real Download Progress Area -->
+      <div id="download-progress" class="progress-box hidden">
+        <div class="progress-info">
+          <span id="progress-status">Preparing download...</span>
+          <span id="progress-percent">0%</span>
         </div>
-        <p id="progress-text">Preparing download...</p>
+        <div class="progress-track">
+          <div id="progress" class="progress-bar"></div>
+        </div>
       </div>
       
+      <!-- Footer options -->
       <div class="footer">
-        <button id="settings-btn" class="btn secondary">Settings</button>
-        <span class="version">v1.0.0</span>
+        <div class="footer-buttons">
+          <button id="settings-btn" class="btn secondary-btn">⚙️ Settings</button>
+          <button id="history-btn" class="btn secondary-btn">📜 History</button>
+        </div>
+        <span class="version-tag">v1.0.13</span>
       </div>
     </div>
   </div>
+
+  <!-- History View Panel -->
+  <div class="container hidden" id="history-view">
+    <div class="header history-header">
+      <button id="history-back-btn" class="btn secondary-btn icon-btn">⬅️ Back</button>
+      <h2>Download History</h2>
+      <button id="history-clear-btn" class="btn danger-btn icon-btn" title="Clear History">🗑️</button>
+    </div>
+    <div id="history-list" class="history-list">
+      <!-- Dynamically filled with history items -->
+    </div>
+  </div>
+  <!-- Settings View Panel -->
+  <div class="container hidden" id="settings-view">
+    <div class="header history-header">
+      <button id="settings-back-btn" class="btn secondary-btn icon-btn">⬅️ Back</button>
+      <h2>Settings</h2>
+      <div style="width: 32px;"></div>
+    </div>
+    
+    <div class="settings-content">
+      <div class="setting-group">
+        <label for="local-save-path">Local Server Download Path</label>
+        <p class="setting-desc">Absolute path on your PC (yt-dlp engine).</p>
+        <input type="text" id="local-save-path" class="setting-input" placeholder="e.g. D:\Dubplitube\Downloads" />
+      </div>
+      
+      <div class="setting-group">
+        <label for="cloud-folder">Cloud API Folder Name</label>
+        <p class="setting-desc">Subfolder in Chrome Downloads (API engine).</p>
+        <input type="text" id="cloud-folder" class="setting-input" placeholder="e.g. Dubplitube" />
+      </div>
+      
+      <button id="save-settings-btn" class="btn primary-btn pulse-animation" style="width: 100%; margin-top: 15px;">💾 Save Settings</button>
+    </div>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# <a href="https://tubly.download">Tubly Downloader</a> - YouTube Downloader Chrome Extension
+# <a href="https://tubly.download">Dubplitube Downloader</a> - YouTube Downloader Chrome Extension
 
 <p align="center">
   <img src="logo/icon128.png" width="64" height="64" alt="YouTube Downloader Logo">

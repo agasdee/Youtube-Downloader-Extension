@@ -1,0 +1,30 @@
+# Executables and Binaries
+*.exe
+
+# Node
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# Media Files
+*.mp4
+*.mp3
+*.m4a
+*.webm
+*.srt
+*.vtt
+
+# Logs and Personal Data
+*.log
+screenshots/
+Download_Dubplitube/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.obsidian/

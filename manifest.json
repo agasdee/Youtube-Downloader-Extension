@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Tubly Downloader",
-  "version": "1.0.0",
-  "description": "Download YouTube videos in 4K, convert to MP3, and save YouTube Shorts",
-  "homepage_url": "https://tubly.download",
+  "name": "Dubplitube Downloader",
+  "version": "1.0.13",
+  "description": "Premium YouTube & Shorts Downloader in 4K, MP3, and HD quality with a gorgeous neon interface.",
+  "homepage_url": "https://github.com/agasdee/Youtube-Downloader-Extension",
   "icons": {
     "128": "logo/icon128.png"
   },

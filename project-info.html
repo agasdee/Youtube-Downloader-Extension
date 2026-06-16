@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dubplitube Downloader - Download YouTube videos in 4K, convert to MP3, and save YouTube Shorts easily.">
+    <title>Dubplitube Downloader | Project Overview</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&family=Noto+Sans+Thai:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Language Toggle */
+        .lang-toggle-container {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 5px;
+            z-index: 100;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+        }
+
+        [data-lang="en"] .lang-th { display: none; }
+        [data-lang="th"] .lang-en { display: none; }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px 40px 20px;
+            position: relative;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            text-align: center;
+            padding: 50px 30px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .logo {
+            width: 96px;
+            height: 96px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        h1 {
+            font-family: 'Outfit', 'Noto Sans Thai', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .badges a {
+            transition: transform 0.2s ease;
+        }
+
+        .badges a:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Content Sections */
+        section {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.4s; }
+        section:nth-child(4) { animation-delay: 0.6s; }
+
+        h2 {
+            font-family: 'Outfit', 'Noto Sans Thai', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #e2e8f0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: rgba(96, 165, 250, 0.3);
+        }
+
+        .feature-card h3 {
+            font-family: 'Outfit', 'Noto Sans Thai', sans-serif;
+            color: #60a5fa;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Screenshots */
+        .screenshot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .screenshot-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.4s ease;
+        }
+
+        .screenshot-container img:hover {
+            transform: scale(1.02);
+        }
+
+        /* FAQ */
+        .faq-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 25px;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-item h3 {
+            color: #c084fc;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .faq-item p {
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            section { padding: 25px; }
+            .lang-toggle-container {
+                top: 15px;
+                right: 15px;
+            }
+            .container { padding-top: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-toggle-container">
+        <button class="lang-btn active" onclick="setLanguage('en')" id="btn-en">EN</button>
+        <button class="lang-btn" onclick="setLanguage('th')" id="btn-th">TH</button>
+    </div>
+
+    <div class="container">
+        
+        <!-- Header Section -->
+        <header>
+            <img src="logo/icon128.png" alt="Dubplitube Downloader Logo" class="logo" onerror="this.src='https://via.placeholder.com/128?text=Dubplitube'">
+            <h1>Dubplitube Downloader</h1>
+            <p class="subtitle lang-en">Download YouTube videos in 4K, convert to MP3, and save YouTube Shorts</p>
+            <p class="subtitle lang-th">ดาวน์โหลดวิดีโอ YouTube ในระดับ 4K, แปลงเป็น MP3 และเซฟ YouTube Shorts</p>
+            
+            <div class="badges">
+                <a href="https://tubly.download/install.html" target="_blank">
+                    <img src="https://img.shields.io/badge/Add%20to-Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Add to Chrome">
+                </a>
+                <a href="https://tubly.download/firefox/tubly_downloader_latest.xpi" target="_blank">
+                    <img src="https://img.shields.io/badge/Add%20to-Firefox-FF7139?style=for-the-badge&logo=firefox" alt="Add to Firefox">
+                </a>
+            </div>
+        </header>
+
+        <!-- Key Features Section -->
+        <section id="features">
+            <h2 class="lang-en">Key Features</h2>
+            <h2 class="lang-th">ฟีเจอร์หลัก</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3 class="lang-en">🎬 4K Video Downloads</h3>
+                    <h3 class="lang-th">🎬 ดาวน์โหลดวิดีโอ 4K</h3>
+                    <p class="lang-en">Download your favorite YouTube videos in stunning ultra HD quality seamlessly.</p>
+                    <p class="lang-th">ดาวน์โหลดวิดีโอ YouTube ที่คุณโปรดปรานในคุณภาพระดับ Ultra HD อย่างลื่นไหล</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-en">🎵 MP3 Converter</h3>
+                    <h3 class="lang-th">🎵 แปลงไฟล์เป็น MP3</h3>
+                    <p class="lang-en">Convert YouTube videos to high-quality 320kbps MP3 audio tracks instantly.</p>
+                    <p class="lang-th">แปลงวิดีโอ YouTube เป็นไฟล์เสียง MP3 คุณภาพสูง 320kbps ได้ทันที</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-en">📱 YouTube Shorts</h3>
+                    <h3 class="lang-th">📱 โหลด YouTube Shorts</h3>
+                    <p class="lang-en">Save viral Shorts videos straight to your device with just one click.</p>
+                    <p class="lang-th">บันทึกวิดีโอ Shorts ยอดฮิตลงในอุปกรณ์ของคุณง่ายๆ ในคลิกเดียว</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-en">🛡️ Clean & Safe</h3>
+                    <h3 class="lang-th">🛡️ สะอาดและปลอดภัย</h3>
+                    <p class="lang-en">No ads, no extra software bundled. A completely straightforward experience.</p>
+                    <p class="lang-th">ไม่มีโฆษณาคั่น ไม่พ่วงโปรแกรมเสริม มอบประสบการณ์ใช้งานที่ตรงไปตรงมา</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-en">🌐 Cross-Platform</h3>
+                    <h3 class="lang-th">🌐 รองรับทุกแพลตฟอร์ม</h3>
+                    <p class="lang-en">Works smoothly on Windows, macOS, and Linux across all major browsers.</p>
+                    <p class="lang-th">ใช้งานได้ลื่นไหลทั้งบน Windows, macOS และ Linux ในทุกเบราว์เซอร์หลัก</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-en">🔒 Private Videos</h3>
+                    <h3 class="lang-th">🔒 วิดีโอส่วนตัว</h3>
+                    <p class="lang-en">Download private videos and member-only content that you have access to.</p>
+                    <p class="lang-th">ดาวน์โหลดวิดีโอส่วนตัวและเนื้อหาเฉพาะสมาชิกที่คุณมีสิทธิ์เข้าถึงได้</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshots Section -->
+        <section id="screenshots">
+            <h2 class="lang-en">Visuals & Interface</h2>
+            <h2 class="lang-th">ภาพตัวอย่างการใช้งาน</h2>
+            <div class="screenshot-container">
+                <img src="screenshots/main.webp" alt="Dubplitube Downloader Interface" onerror="this.style.display='none'">
+                <img src="screenshots/shorts.webp" alt="YouTube Shorts Download Interface" onerror="this.style.display='none'">
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+            <h2 class="lang-en">Frequently Asked Questions</h2>
+            <h2 class="lang-th">คำถามที่พบบ่อย</h2>
+            <div class="faq-item">
+                <h3 class="lang-en">How do I download YouTube videos in 4K quality?</h3>
+                <h3 class="lang-th">ฉันจะดาวน์โหลดวิดีโอ YouTube แบบ 4K ได้อย่างไร?</h3>
+                <p class="lang-en">Simply navigate to any YouTube video, and click the download button that appears below the video player. You'll be presented with multiple quality options, including 4K (2160p) and even 8K if available.</p>
+                <p class="lang-th">เพียงเปิดวิดีโอ YouTube ที่ต้องการ แล้วคลิกปุ่มดาวน์โหลดที่ปรากฏใต้เครื่องเล่นวิดีโอ คุณจะพบตัวเลือกคุณภาพมากมายรวมถึง 4K (2160p) หรือแม้แต่ 8K หากมีให้ดาวน์โหลด</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="lang-en">Can I download YouTube Shorts videos?</h3>
+                <h3 class="lang-th">ฉันสามารถดาวน์โหลด YouTube Shorts ได้ไหม?</h3>
+                <p class="lang-en">Yes! Our extension is specially designed to detect and download YouTube Shorts. When viewing Shorts content, you'll see our download button appear.</p>
+                <p class="lang-th">ได้แน่นอน! ส่วนขยายของเราถูกออกแบบมาเพื่อตรวจจับและดาวน์โหลด YouTube Shorts โดยเฉพาะ ปุ่มดาวน์โหลดจะปรากฏขึ้นขณะที่คุณดู Shorts ทันที</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="lang-en">How to convert YouTube videos to MP3?</h3>
+                <h3 class="lang-th">วิธีแปลงวิดีโอ YouTube เป็น MP3 ทำอย่างไร?</h3>
+                <p class="lang-en">Our extension extracts audio directly from videos without requiring any additional software. After installing, you'll see an "Audio" option when clicking the download button to save in high-quality 320kbps MP3 format.</p>
+                <p class="lang-th">ส่วนขยายของเราดึงไฟล์เสียงจากวิดีโอได้โดยตรงโดยไม่ต้องใช้ซอฟต์แวร์เพิ่มเติม หลังติดตั้ง คุณจะเห็นตัวเลือก "Audio" เมื่อคลิกปุ่มดาวน์โหลด เพื่อบันทึกเป็น MP3 คุณภาพสูง 320kbps</p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            
+            // Update button styles
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-th').classList.toggle('active', lang === 'th');
+            
+            // Optional: Save preference to localStorage
+            try {
+                localStorage.setItem('preferred-language', lang);
+            } catch(e) {}
+        }
+        
+        // Auto-detect language on load
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                const savedLang = localStorage.getItem('preferred-language');
+                if (savedLang === 'th' || savedLang === 'en') {
+                    setLanguage(savedLang);
+                } else {
+                    const browserLang = navigator.language || navigator.userLanguage;
+                    if (browserLang.toLowerCase().includes('th')) {
+                        setLanguage('th');
+                    }
+                }
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>
