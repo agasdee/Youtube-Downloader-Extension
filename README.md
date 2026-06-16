@@ -1,5 +1,7 @@
 # <a href="https://tubly.download">Dubplitube Downloader</a> - YouTube Downloader Chrome Extension
 
+> **Note:** Dubplitube is a modified fork of the original [Tubely](https://github.com/tublydownloader/Youtube-Downloader-Extension) project. Special thanks to the original authors.
+
 <p align="center">
   <img src="logo/icon128.png" width="64" height="64" alt="YouTube Downloader Logo">
 </p>

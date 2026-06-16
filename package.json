@@ -20,7 +20,7 @@
     "browser-extension",
     "chrome"
   ],
-  "author": "Tubly Downloader",
+  "author": "agasdee",
   "devDependencies": {
     "eslint": "^8.42.0",
     "jest": "^29.5.0",
