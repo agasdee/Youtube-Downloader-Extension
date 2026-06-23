@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsView = document.getElementById('settings-view');
   const settingsBackBtn = document.getElementById('settings-back-btn');
   const saveSettingsBtn = document.getElementById('save-settings-btn');
+  const serverUrlInput = document.getElementById('server-url');
+  const presetLocalBtn = document.getElementById('preset-local-btn');
+  const presetCloudBtn = document.getElementById('preset-cloud-btn');
   const localSavePathInput = document.getElementById('local-save-path');
   const cloudFolderInput = document.getElementById('cloud-folder');
   
@@ -108,7 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     settingsView.classList.remove('hidden');
     
     // Load existing settings
-    chrome.storage.local.get(['localSavePath', 'preferredFolder'], (res) => {
+    chrome.storage.local.get(['serverUrl', 'localSavePath', 'preferredFolder'], (res) => {
+      serverUrlInput.value = res.serverUrl || 'http://localhost:5000';
       localSavePathInput.value = res.localSavePath || '';
       cloudFolderInput.value = res.preferredFolder || 'Dubplitube';
     });
@@ -119,11 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
     mainView.classList.remove('hidden');
   });
 
+  presetLocalBtn.addEventListener('click', () => {
+    serverUrlInput.value = 'http://localhost:5000';
+  });
+
+  presetCloudBtn.addEventListener('click', () => {
+    serverUrlInput.value = 'https://dublitube.awsomeagentic.com';
+  });
+
   saveSettingsBtn.addEventListener('click', () => {
+    let serverUrl = serverUrlInput.value.trim() || 'http://localhost:5000';
+    // Remove trailing slash if present
+    if (serverUrl.endsWith('/')) {
+      serverUrl = serverUrl.slice(0, -1);
+    }
     const localSavePath = localSavePathInput.value.trim();
     const preferredFolder = cloudFolderInput.value.trim() || 'Dubplitube';
     
     chrome.storage.local.set({ 
+      serverUrl: serverUrl,
       localSavePath: localSavePath,
       preferredFolder: preferredFolder
     }, () => {

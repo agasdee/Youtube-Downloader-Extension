@@ -92,7 +92,7 @@
           <button id="settings-btn" class="btn secondary-btn">⚙️ Settings</button>
           <button id="history-btn" class="btn secondary-btn">📜 History</button>
         </div>
-        <span class="version-tag">v1.0.13</span>
+        <span class="version-tag">v1.0.14</span>
       </div>
     </div>
   </div>
@@ -117,6 +117,16 @@
     </div>
     
     <div class="settings-content">
+      <div class="setting-group">
+        <label for="server-url">Server URL</label>
+        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+          <button id="preset-local-btn" class="btn secondary-btn" style="flex: 1; padding: 6px; font-size: 12px;">🏠 Local (5000)</button>
+          <button id="preset-cloud-btn" class="btn secondary-btn" style="flex: 1; padding: 6px; font-size: 12px;">☁️ Cloud (Domain)</button>
+        </div>
+        <input type="text" id="server-url" class="setting-input" placeholder="e.g. http://localhost:5000" />
+        <span class="setting-desc">The URL of your Companion Server (or Cloudflare Tunnel domain)</span>
+      </div>
+      
       <div class="setting-group">
         <label for="local-save-path">Local Server Download Path</label>
         <p class="setting-desc">Absolute path on your PC (yt-dlp engine).</p>

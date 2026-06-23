@@ -52,10 +52,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // Keep message channel open for async response
   } else if (request.action === 'checkStatus') {
     const { videoId } = request;
-    fetch(`http://localhost:5000/status?id=${videoId}`)
-      .then(r => r.json())
-      .then(data => sendResponse(data))
-      .catch(err => sendResponse({ success: false, error: err.message }));
+    chrome.storage.local.get(['serverUrl'], (res) => {
+      const serverUrl = res.serverUrl || 'http://localhost:5000';
+      fetch(`${serverUrl}/status?id=${videoId}`)
+        .then(r => r.json())
+        .then(data => sendResponse(data))
+        .catch(err => sendResponse({ success: false, error: err.message }));
+    });
     return true; // Keep message channel open for async response
   }
 });
@@ -98,33 +101,38 @@ async function handleCloudApiDownload(videoId, qualityId, type, filename, sendRe
 }
 
 // Handle Local Companion yt-dlp Download (Option B)
-async function handleLocalDownload(videoId, qualityId, type, title, savePath, sendResponse) {
-  const localCompanionUrl = 'http://localhost:5000/download';
+async function handleLocalDownload(videoId, qualityId, type, title, savePathArg, sendResponse) {
   
-  try {
-    const encodedTitle = encodeURIComponent(title);
-    const encodedPath = savePath ? `&save_path=${encodeURIComponent(savePath)}` : '';
-    const response = await fetch(`${localCompanionUrl}?id=${videoId}&quality=${qualityId}&type=${type}&title=${encodedTitle}${encodedPath}`, {
-      method: 'GET'
-    });
+  chrome.storage.local.get(['serverUrl', 'localSavePath'], async (res) => {
+    const serverUrl = res.serverUrl || 'http://localhost:5000';
+    const localCompanionUrl = `${serverUrl}/download`;
+    const savePath = res.localSavePath || '';
     
-    if (response.ok) {
-      const data = await response.json();
-      if (data && data.success) {
-        sendResponse({ success: true, local: true, filename: data.filename });
+    try {
+      const encodedTitle = encodeURIComponent(title);
+      const encodedPath = savePath ? `&save_path=${encodeURIComponent(savePath)}` : '';
+      const response = await fetch(`${localCompanionUrl}?id=${videoId}&quality=${qualityId}&type=${type}&title=${encodedTitle}${encodedPath}`, {
+        method: 'GET'
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.success) {
+          sendResponse({ success: true, local: true, filename: data.filename });
+        } else {
+          sendResponse({ success: false, error: data.error || "Local companion failed to download." });
+        }
       } else {
-        sendResponse({ success: false, error: data.error || "Local companion failed to download." });
+        sendResponse({ success: false, error: "Local companion server returned an error state." });
       }
-    } else {
-      sendResponse({ success: false, error: "Local companion server returned an error state." });
+    } catch (error) {
+      console.error("Local companion connection failed:", error);
+      sendResponse({ 
+        success: false, 
+        error: "Companion server NOT detected or unreachable!"
+      });
     }
-  } catch (error) {
-    console.error("Local companion connection failed:", error);
-    sendResponse({ 
-      success: false, 
-      error: "Companion server NOT detected! Please double-click 'run_companion.bat' to start the local yt-dlp server first."
-    });
-  }
+  });
 }
 
 // File name cleaner to avoid OS file system conflicts

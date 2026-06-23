@@ -274,7 +274,7 @@ def run_server(port=5000):
     
     log_print("=================================================================")
     log_print("       ⚡ DUBPLITUBE COMPANION SERVER IS READY ⚡")
-    log_print("       [v1.0.13 - The Ultimate Edition]")
+    log_print("       [v1.0.14 - The Ultimate Edition]")
     log_print("=================================================================")
     log_print(f"  Server Address : http://localhost:{port}")
     log_print(f"  Downloads Path : {DOWNLOADS_DIR}")
